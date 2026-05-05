@@ -45,6 +45,7 @@ Além da landing principal, o pacote web agora inclui:
 - Preview local: `landing-page/index.html`
 - Servidor local: `http://127.0.0.1:4173`
 - URL pública temporária: `https://session-crm-york-submit.trycloudflare.com`
+- URL pública estável: `https://ctohubpodium.github.io/hub-podium-do-zero/`
 
 ## Observação importante
 
@@ -52,7 +53,7 @@ A URL pública atual foi aberta por quick tunnel do Cloudflare. Ela é útil par
 
 ## Próximo nível de publicação
 
-Para versão estável de produção, o caminho preferencial agora é GitHub Pages com workflow próprio.
+Para versão estável de produção, o caminho adotado foi GitHub Pages com workflow próprio.
 
 ### Como ativar
 
