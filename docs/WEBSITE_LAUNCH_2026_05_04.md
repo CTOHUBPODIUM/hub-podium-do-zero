@@ -46,6 +46,7 @@ Além da landing principal, o pacote web agora inclui:
 - Servidor local: `http://127.0.0.1:4173`
 - URL pública temporária: `https://session-crm-york-submit.trycloudflare.com`
 - URL pública estável: `https://ctohubpodium.github.io/hub-podium-do-zero/`
+- Domínio customizado configurado no GitHub Pages: `https://hub-podium.com/`
 
 ## Observação importante
 
