@@ -59,6 +59,70 @@ a {
   color: var(--gold);
 }
 
+.legal-body {
+  background: #eef1f5;
+}
+
+.legal-header {
+  padding: 24px 0;
+  background: var(--bg);
+  color: var(--white);
+}
+
+.legal-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.legal-brand {
+  color: var(--white);
+}
+
+.legal-shell {
+  padding-top: 72px;
+  padding-bottom: 88px;
+}
+
+.legal-shell h1 {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.08;
+}
+
+.legal-lead {
+  max-width: 760px;
+  margin: 20px 0 0;
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.legal-card-stack {
+  display: grid;
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.legal-card {
+  padding: 24px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.legal-card p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
+.legal-note {
+  background: rgba(214, 175, 55, 0.08);
+}
+
 .hero {
   position: relative;
   min-height: 92svh;
@@ -237,6 +301,38 @@ a {
   align-items: start;
 }
 
+.legal-inline-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.legal-inline-copy {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 760px;
+}
+
+.legal-inline-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.legal-inline-links a {
+  color: var(--gold-soft);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 section.section-shell,
 .dark-band,
 .timeline-band,
@@ -266,7 +362,8 @@ h3 {
 .build-grid,
 .audience-list,
 .timeline,
-.governance-grid {
+.governance-grid,
+.plan-grid {
   display: grid;
   gap: 18px;
 }
@@ -291,11 +388,16 @@ h3 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.plan-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .pillar,
 .build-card,
 .audience-list article,
 .timeline article,
-.governance-grid article {
+.governance-grid article,
+.plan-card {
   min-height: 100%;
   padding: 24px;
   border-radius: var(--radius);
@@ -304,9 +406,32 @@ h3 {
 .pillar,
 .audience-list article,
 .timeline article,
-.governance-grid article {
+.governance-grid article,
+.plan-card {
   border: 1px solid var(--border-light);
   background: rgba(255, 255, 255, 0.68);
+}
+
+.plan-label {
+  margin: 0 0 10px;
+  color: var(--gold-soft);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.plan-price {
+  margin: 0 0 14px;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.plan-price span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-soft);
 }
 
 .dark-band {
