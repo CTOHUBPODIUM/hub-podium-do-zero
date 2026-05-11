@@ -421,6 +421,13 @@ h3 {
   letter-spacing: 0.08em;
 }
 
+.plan-status {
+  margin: 0 0 14px;
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .plan-price {
   margin: 0 0 14px;
   font-size: 34px;
