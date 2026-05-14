@@ -1,0 +1,23 @@
+﻿competition_track,canonical_position_code,position_family,target_total,current_seed_count,current_candidate_count,next_milestone_count,population_stage,owner,priority,next_action,source_audit_status
+masculino,goleiro,goleiro,100,5,25,25,top25_shortlist_started,Diego Torres,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,lateral_direito,lateral,100,5,25,25,top25_shortlist_started,Helena Martins,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,lateral_esquerdo,lateral,100,5,25,25,top25_shortlist_started,Helena Martins,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,zagueiro,zagueiro,100,5,25,25,top25_shortlist_started,Diego Torres,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,volante,volante,100,5,25,25,top25_shortlist_started,Diego Torres,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,meia_central,meia,100,5,25,25,top25_shortlist_started,Lara Nascimento,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,meia_ofensivo,meia,100,5,25,25,top25_shortlist_started,Lara Nascimento,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,ponta_direita,ponta,100,5,25,25,top25_shortlist_started,Lara Nascimento,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,ponta_esquerda,ponta,100,5,25,25,top25_shortlist_started,Lara Nascimento,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,segundo_atacante,atacante,100,5,25,25,top25_shortlist_started,Diego Torres,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+masculino,centroavante,atacante,100,5,25,25,top25_shortlist_started,Diego Torres,high,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,goleiro,goleiro,100,5,25,25,top25_shortlist_started,Diego Torres,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_progress
+feminino,lateral_direito,lateral,100,5,25,25,top25_shortlist_started,Helena Martins,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,lateral_esquerdo,lateral,100,5,25,25,top25_shortlist_started,Helena Martins,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,zagueiro,zagueiro,100,5,25,25,top25_shortlist_started,Diego Torres,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_progress
+feminino,volante,volante,100,5,25,25,top25_shortlist_started,Diego Torres,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_progress
+feminino,meia_central,meia,100,5,25,25,top25_shortlist_started,Lara Nascimento,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,meia_ofensivo,meia,100,5,25,25,top25_shortlist_started,Lara Nascimento,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,ponta_direita,ponta,100,5,25,25,top25_shortlist_started,Lara Nascimento,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,ponta_esquerda,ponta,100,5,25,25,top25_shortlist_started,Lara Nascimento,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_review_seed_audit
+feminino,segundo_atacante,atacante,100,5,25,25,top25_shortlist_started,Diego Torres,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_progress
+feminino,centroavante,atacante,100,5,25,25,top25_shortlist_started,Diego Torres,critical,executar discovery complementar para levar anchors seed a top 10 auditado,in_progress

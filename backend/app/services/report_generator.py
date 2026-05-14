@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 from tempfile import gettempdir
 
 from reportlab.lib.pagesizes import A4
@@ -20,23 +20,22 @@ def safe_text(value, fallback=""):
     return text or fallback
 
 
-def wrap_text(text, max_chars=84):
+def wrap_text_to_width(c, text, max_width, font_name="Helvetica", font_size=10):
     words = safe_text(text).split()
     if not words:
         return [""]
 
     lines = []
-    current = []
-    for word in words:
-        candidate = " ".join([*current, word])
-        if len(candidate) > max_chars and current:
-            lines.append(" ".join(current))
-            current = [word]
+    current = words[0]
+    for word in words[1:]:
+        candidate = f"{current} {word}"
+        if c.stringWidth(candidate, font_name, font_size) > max_width:
+            lines.append(current)
+            current = word
         else:
-            current.append(word)
+            current = candidate
 
-    if current:
-        lines.append(" ".join(current))
+    lines.append(current)
     return lines
 
 
@@ -92,8 +91,8 @@ class ReportLayout:
         if self.y - height_needed < BOTTOM + 28:
             self.new_page()
 
-    def section_title(self, title):
-        self.ensure_space(32)
+    def section_title(self, title, min_content_space=22):
+        self.ensure_space(32 + min_content_space)
         self.c.setFillColorRGB(0.08, 0.10, 0.14)
         self.c.setFont("Helvetica-Bold", 15)
         self.c.drawString(LEFT, self.y, title)
@@ -102,32 +101,101 @@ class ReportLayout:
         self.c.line(LEFT, self.y, RIGHT, self.y)
         self.y -= 16
 
-    def body_text(self, text, max_chars=84, leading=14, gap=5):
-        lines = wrap_text(text, max_chars=max_chars)
+    def body_text(self, text, max_width=None, leading=14, gap=5, x=None):
+        font_name = "Helvetica"
+        font_size = 10
+        lines = wrap_text_to_width(
+            self.c,
+            text,
+            max_width or (RIGHT - LEFT),
+            font_name=font_name,
+            font_size=font_size,
+        )
         self.ensure_space(len(lines) * leading + gap)
         self.c.setFillColorRGB(0.18, 0.20, 0.24)
-        self.c.setFont("Helvetica", 10)
+        self.c.setFont(font_name, font_size)
+        text_x = x or LEFT
         for line in lines:
-            self.c.drawString(LEFT, self.y, line)
+            self.c.drawString(text_x, self.y, line)
             self.y -= leading
         self.y -= gap
 
-    def key_value(self, label, value):
+    def sub_label(self, label):
         self.ensure_space(18)
         self.c.setFont("Helvetica-Bold", 10)
         self.c.setFillColorRGB(0.08, 0.10, 0.14)
         self.c.drawString(LEFT, self.y, f"{label}:")
-        self.c.setFont("Helvetica", 10)
-        self.c.setFillColorRGB(0.22, 0.24, 0.28)
-        self.c.drawString(130, self.y, safe_text(value, "Não informado"))
         self.y -= 16
+
+    def key_value(self, label, value, fallback="Não informado"):
+        label_text = f"{label}:"
+        label_font = "Helvetica-Bold"
+        value_font = "Helvetica"
+        font_size = 10
+        inline_threshold = 150
+        indent = LEFT + 158
+
+        label_width = self.c.stringWidth(label_text, label_font, font_size)
+        value_text = safe_text(value, fallback) if fallback is not None else safe_text(value, "")
+        value_width = RIGHT - max(indent, LEFT + label_width + 10)
+        value_lines = (
+            wrap_text_to_width(
+                self.c,
+                value_text,
+                max(80, value_width),
+                font_name=value_font,
+                font_size=font_size,
+            )
+            if value_text
+            else []
+        )
+        stack_value = label_width > inline_threshold or max(indent, LEFT + label_width + 10) > RIGHT - 160
+        line_count = max(1, len(value_lines))
+        height_needed = 16
+        if value_lines:
+            height_needed += (line_count - (0 if stack_value else 1)) * 14
+            if stack_value:
+                height_needed += 14
+        self.ensure_space(max(18, height_needed + 4))
+
+        self.c.setFont(label_font, font_size)
+        self.c.setFillColorRGB(0.08, 0.10, 0.14)
+        self.c.drawString(LEFT, self.y, label_text)
+
+        if not value_lines:
+            self.y -= 16
+            return
+
+        self.c.setFont(value_font, font_size)
+        self.c.setFillColorRGB(0.22, 0.24, 0.28)
+        if stack_value:
+            self.y -= 16
+            for line in value_lines:
+                self.c.drawString(LEFT + 12, self.y, line)
+                self.y -= 14
+            self.y -= 2
+            return
+
+        value_x = max(indent, LEFT + label_width + 10)
+        current_y = self.y
+        for index, line in enumerate(value_lines):
+            self.c.drawString(value_x, current_y, line)
+            if index < len(value_lines) - 1:
+                current_y -= 14
+        self.y = current_y - 16
 
     def bullets(self, items):
         for item in items:
             text = safe_text(item)
             if not text:
                 continue
-            lines = wrap_text(text, max_chars=78)
+            lines = wrap_text_to_width(
+                self.c,
+                text,
+                RIGHT - (LEFT + 12),
+                font_name="Helvetica",
+                font_size=10,
+            )
             self.ensure_space(len(lines) * 14 + 4)
             self.c.setFont("Helvetica", 10)
             self.c.setFillColorRGB(0.18, 0.20, 0.24)
@@ -183,9 +251,23 @@ def draw_cover(layout, data):
 
     if photo_path:
         try:
-            c.drawImage(ImageReader(str(photo_path)), RIGHT - 120, layout.y - 10, width=90, height=108, preserveAspectRatio=True, anchor="n")
+            frame_x = RIGHT - 128
+            frame_y = layout.y - 116
+            frame_width = 106
+            frame_height = 122
+            image_padding = 8
+            c.drawImage(
+                ImageReader(str(photo_path)),
+                frame_x + image_padding,
+                frame_y + image_padding,
+                width=frame_width - (image_padding * 2),
+                height=frame_height - (image_padding * 2),
+                preserveAspectRatio=True,
+                anchor="c",
+            )
             c.setStrokeColorRGB(0.83, 0.69, 0.22)
-            c.roundRect(RIGHT - 128, layout.y - 116, 106, 122, 10, stroke=1, fill=0)
+            c.roundRect(frame_x, frame_y, frame_width, frame_height, 10, stroke=1, fill=0)
+            layout.y = min(layout.y, frame_y - 18)
         except Exception:
             pass
 
@@ -267,16 +349,16 @@ def draw_analysis_pages(layout, data):
             elif item:
                 items.append(safe_text(item))
         if items:
-            layout.section_title("Prioridades de evolução")
+            layout.section_title("Prioridades de evolução", min_content_space=54)
             layout.bullets(items)
 
     if comparative.get("parent_summary") or comparative.get("club_summary"):
-        layout.section_title("Leitura para famílias e clubes")
+        layout.section_title("Leitura para famílias e clubes", min_content_space=40)
         if comparative.get("parent_summary"):
-            layout.key_value("Pais e responsáveis", "")
+            layout.sub_label("Pais e responsáveis")
             layout.body_text(comparative.get("parent_summary"))
         if comparative.get("club_summary"):
-            layout.key_value("Clubes e treinadores", "")
+            layout.sub_label("Clubes e treinadores")
             layout.body_text(comparative.get("club_summary"))
 
     layout.section_title("Mapa Golden Ball")
@@ -296,74 +378,46 @@ def draw_roadmap_pages(layout, data):
     calibration = data.get("calibration", {})
     training_roadmap = calibration.get("training_roadmap", {})
     evolution_subscription = calibration.get("evolution_subscription", {})
-    customer_offers = calibration.get("customer_offers", {})
     onboarding_journey = calibration.get("onboarding_journey", {})
-    commercial_plans = calibration.get("commercial_plans", {})
-    sales_activation_flow = calibration.get("sales_activation_flow", {})
     executive_summary = data.get("executive_summary", {})
     profile_match = data.get("elite_profile_match", {})
     facial_verification = data.get("facial_verification") or {}
 
     cycles = training_roadmap.get("cycles", [])
     if cycles:
-        layout.section_title("Roadmap de treino")
+        layout.section_title("Roadmap de treino", min_content_space=120)
         layout.body_text(training_roadmap.get("summary", ""))
         for cycle in cycles:
             layout.ensure_space(80)
-            layout.key_value(safe_text(cycle.get("cycle"), "Ciclo").replace("_", " ").title(), safe_text(cycle.get("label"), "").title())
+            layout.key_value(
+                f"Ciclo {safe_text(cycle.get('cycle'), '1')}",
+                safe_text(cycle.get("label"), "").title(),
+            )
             layout.body_text(cycle.get("goal", ""))
             if cycle.get("training_blocks"):
                 layout.body_text(f"Blocos: {', '.join(cycle.get('training_blocks', []))}")
             layout.body_text(cycle.get("checkpoint", ""))
 
     if evolution_subscription:
-        layout.section_title("HUB-PODIUM Evolução")
-        layout.key_value("Plano", evolution_subscription.get("plan_name", "HUB-PODIUM Evolução"))
-        layout.key_value("Módulo", evolution_subscription.get("module_name", "Módulo evolutivo"))
-        layout.key_value("Faixa", evolution_subscription.get("program_tier", "Desenvolvimento competitivo"))
+        layout.section_title("Acompanhamento em estudo", min_content_space=40)
+        layout.key_value("Frente atual", evolution_subscription.get("plan_name", "Acompanhamento em estudo"))
+        layout.key_value("Módulo base", evolution_subscription.get("module_name", "Módulo evolutivo"))
+        layout.key_value("Contexto competitivo", evolution_subscription.get("program_tier", "Desenvolvimento competitivo"))
         layout.body_text(evolution_subscription.get("sales_summary", ""))
 
-    if customer_offers:
-        layout.section_title("Oferta comercial")
-        layout.body_text(customer_offers.get("summary", ""))
-        for key in ("parent_offer", "club_offer", "school_offer"):
-            offer = customer_offers.get(key) or {}
-            if not offer:
-                continue
-            layout.key_value(safe_text(offer.get("segment"), "segmento").replace("_", " ").title(), offer.get("headline", ""))
-            layout.body_text(offer.get("primary_value", ""))
-
     if onboarding_journey:
-        layout.section_title("Onboarding HUB-PODIUM Evolução")
+        layout.section_title("Roteiro da beta", min_content_space=40)
         layout.body_text(onboarding_journey.get("summary", ""))
         for step in onboarding_journey.get("steps", []):
             layout.key_value(f"Etapa {step.get('step', '')}", step.get("title", ""))
             layout.body_text(step.get("description", ""))
 
-    plans = commercial_plans.get("plans", {})
-    launch_order = commercial_plans.get("launch_order", [])
-    if plans and launch_order:
-        layout.section_title("Planos comerciais")
-        layout.body_text(commercial_plans.get("summary", ""))
-        for key in launch_order:
-            plan = plans.get(key) or {}
-            layout.key_value(plan.get("plan_name", "Plano"), f"R$ {plan.get('price_brl_month', 0):.2f} · {safe_text(plan.get('billing_cycle'), 'ciclo')}")
-            layout.body_text(plan.get("short_site_copy", ""))
-
-    activation_steps = sales_activation_flow.get("activation_steps", [])
-    if activation_steps:
-        layout.section_title("Fluxo de ativação")
-        layout.body_text(sales_activation_flow.get("summary", ""))
-        for step in activation_steps:
-            layout.key_value(f"Etapa {step.get('step', '')}", step.get("plan_name", ""))
-            layout.body_text(step.get("conversion_goal", ""))
-            layout.body_text(f"Canal principal: {safe_text(step.get('entry_channel'), 'não definido')}")
-
-    layout.section_title("Recomendações HUB-PODIUM")
+    layout.section_title("Recomendações HUB-PODIUM", min_content_space=54)
     recommendations = [
         "Manter rotina de treinos técnicos, tomada de decisão e intensidade sem bola.",
         executive_summary.get("development_recommendation", ""),
         "Enviar novos vídeos periodicamente para acompanhar a evolução do atleta.",
+        "Sem comercialização ativa nesta fase. O foco atual é validação técnica, clareza da devolutiva e teste assistido.",
         profile_match.get("disclaimer", ""),
         executive_summary.get("institutional_note", ""),
         facial_verification.get("disclaimer", ""),
@@ -380,3 +434,4 @@ def generate_report(data):
     layout.draw_footer()
     c.save()
     return str(OUTPUT)
+
