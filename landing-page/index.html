@@ -109,65 +109,82 @@
           </div>
         </div>
 
-        <div class="analytics-panel reveal delay-1" aria-label="Previa visual da plataforma HUB-PODIUM">
+        <div class="analytics-panel hero-interface-stage reveal delay-1" aria-label="Prévia visual da plataforma HUB-PODIUM">
           <div class="panel-topline">
             <span>HUB-PODIUM INTELLIGENCE LAYER</span>
-            <strong>institutional preview</strong>
+            <strong>live preview</strong>
           </div>
 
-          <div class="athlete-card-preview">
-            <div>
-              <span class="preview-label">Profile index</span>
-              <strong>84</strong>
+          <div class="tactical-hud" aria-hidden="true">
+            <div class="hud-title">
+              <span>Análise tática</span>
+              <strong>87</strong>
             </div>
-            <div>
-              <span class="preview-label">Contexto</span>
-              <strong>Sub-15 | Meia central</strong>
-            </div>
-          </div>
-
-          <div class="data-console">
-            <div class="console-row">
-              <span>vídeo_input</span>
-              <strong>validado</strong>
-            </div>
-            <div class="console-row">
-              <span>position_family</span>
-              <strong>meia</strong>
-            </div>
-            <div class="console-row">
-              <span>analysis_mode</span>
-              <strong>assistido</strong>
+            <div class="pitch-board">
+              <span class="pitch-midline"></span>
+              <span class="pitch-circle"></span>
+              <i style="--x: 22%; --y: 66%"></i>
+              <i style="--x: 36%; --y: 45%"></i>
+              <i style="--x: 52%; --y: 58%"></i>
+              <i style="--x: 64%; --y: 36%"></i>
+              <i style="--x: 77%; --y: 54%"></i>
             </div>
           </div>
 
-          <div class="metric-grid">
-            <div class="metric-tile">
-              <span>Físico</span>
-              <strong>78</strong>
-              <i style="--value: 78%"></i>
+          <div class="floating-kpi kpi-score" aria-hidden="true">
+            <span>Índice de performance</span>
+            <strong>84</strong>
+          </div>
+
+          <div class="floating-kpi kpi-load" aria-hidden="true">
+            <span>Carga competitiva</span>
+            <strong>7.2 km</strong>
+          </div>
+
+          <div class="device-preview" aria-hidden="true">
+            <div class="device-topbar">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
-            <div class="metric-tile">
-              <span>Técnico</span>
-              <strong>86</strong>
-              <i style="--value: 86%"></i>
+            <div class="device-video">
+              <i></i>
             </div>
-            <div class="metric-tile">
-              <span>Leitura</span>
-              <strong>82</strong>
-              <i style="--value: 82%"></i>
+            <div class="device-grid">
+              <span style="height: 34%"></span>
+              <span style="height: 62%"></span>
+              <span style="height: 48%"></span>
+              <span style="height: 78%"></span>
+              <span style="height: 56%"></span>
             </div>
           </div>
 
-          <div class="timeline-preview">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
           <p class="panel-disclaimer">
             Visual demonstrativo. A análise final depende de dados válidos, consentimento, revisão de qualidade e contexto esportivo.
           </p>
+        </div>
+
+        <div class="hero-value-strip reveal delay-2" aria-label="Pilares da proposta de valor">
+          <article class="value-signal">
+            <span class="signal-icon capture-icon" aria-hidden="true"></span>
+            <strong>Captação inteligente</strong>
+            <p>Vídeo, contexto e organização inicial.</p>
+          </article>
+          <article class="value-signal">
+            <span class="signal-icon bars-icon" aria-hidden="true"></span>
+            <strong>Análise avançada</strong>
+            <p>Métricas, padrões e comportamento.</p>
+          </article>
+          <article class="value-signal">
+            <span class="signal-icon insight-icon" aria-hidden="true"></span>
+            <strong>Insights que geram impacto</strong>
+            <p>Leitura objetiva para melhores decisões.</p>
+          </article>
+          <article class="value-signal">
+            <span class="signal-icon athlete-icon" aria-hidden="true"></span>
+            <strong>Formação de atletas</strong>
+            <p>Evolução com critério e responsabilidade.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -248,7 +265,7 @@
           </article>
           <article class="elite-row reveal">
             <strong>Inteligência</strong>
-            <span>Informação transformada em leitura acionível para famílias, clubes e profissionais.</span>
+            <span>Informação transformada em leitura acionável para famílias, clubes e profissionais.</span>
           </article>
         </div>
       </div>
@@ -258,7 +275,7 @@
       <div class="section-shell">
         <div class="section-header reveal">
           <p class="section-kicker">Tecnologia e dados</p>
-          <h2 id="tech-title">Tecnologia para transformar vídeo em análise acionível.</h2>
+          <h2 id="tech-title">Tecnologia para transformar vídeo em análise acionável.</h2>
           <p>
             Análise por vídeo, dados estruturados, dashboards e inteligência esportiva para leituras
             mais consistentes sobre desenvolvimento, perfil e contexto esportivo.
@@ -313,31 +330,67 @@
           </div>
         </div>
 
-        <div class="dashboard-demo reveal delay-1">
-          <div class="demo-header">
-            <span>Platform preview</span>
-            <strong>Development snapshot</strong>
-          </div>
-          <div class="demo-chart" aria-hidden="true">
-            <span style="height: 42%"></span>
-            <span style="height: 64%"></span>
-            <span style="height: 58%"></span>
-            <span style="height: 81%"></span>
-            <span style="height: 72%"></span>
-            <span style="height: 88%"></span>
-          </div>
-          <div class="demo-metrics">
+        <div class="product-dashboard home-dashboard-preview reveal delay-1" aria-label="Dashboard demonstrativo da plataforma HUB-PODIUM">
+          <div class="product-topbar">
             <div>
-              <strong>92%</strong>
-              <span>clareza visual</span>
+              <span>Dashboard</span>
+              <strong>HUB-PODIUM Platform Preview</strong>
             </div>
-            <div>
-              <strong>5</strong>
-              <span>dimensoes</span>
-            </div>
-            <div>
-              <strong>360</strong>
-              <span>contexto</span>
+            <p>Modo demonstrativo</p>
+          </div>
+
+          <div class="product-body">
+            <aside class="product-sidebar" aria-label="Módulos da plataforma">
+              <span class="active">Visão geral</span>
+              <span>Atletas</span>
+              <span>Análises</span>
+              <span>Relatórios</span>
+            </aside>
+
+            <div class="product-grid">
+              <section class="product-module profile-module">
+                <p class="module-label">Perfil do atleta</p>
+                <div class="profile-portrait" aria-hidden="true">EM</div>
+                <strong>Enzo Martins</strong>
+                <span>#10 | Meia-atacante</span>
+              </section>
+
+              <section class="product-module radar-module">
+                <p class="module-label">Atributos</p>
+                <div class="radar-visual" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="module-pair">
+                  <span>Técnica <strong>82</strong></span>
+                  <span>Leitura <strong>88</strong></span>
+                </div>
+              </section>
+
+              <section class="product-module evolution-module">
+                <p class="module-label">Evolução</p>
+                <div class="evolution-line" aria-hidden="true">
+                  <span></span>
+                  <i style="left: 9%; bottom: 24%"></i>
+                  <i style="left: 28%; bottom: 42%"></i>
+                  <i style="left: 52%; bottom: 54%"></i>
+                  <i style="left: 76%; bottom: 69%"></i>
+                  <i style="left: 92%; bottom: 82%"></i>
+                </div>
+                <div class="module-pair">
+                  <span>Geral <strong>78</strong></span>
+                  <span>+12%</span>
+                </div>
+              </section>
+
+              <section class="product-module metrics-module">
+                <p class="module-label">Métricas</p>
+                <div class="mini-metric-grid">
+                  <span><strong>812</strong>min</span>
+                  <span><strong>6</strong>gols</span>
+                  <span><strong>87%</strong>passes</span>
+                  <span><strong>7,48</strong>nota</span>
+                </div>
+              </section>
             </div>
           </div>
         </div>
@@ -347,10 +400,10 @@
     <section class="audience-section" aria-labelledby="audience-title">
       <div class="section-shell">
         <div class="section-header reveal">
-          <p class="section-kicker">Para quem e</p>
+          <p class="section-kicker">Para quem é</p>
           <h2 id="audience-title">Inteligência esportiva para quem constrói o futuro do jogo.</h2>
           <p>
-            A comunicacao da HUB-PODIUM e institucional: tecnologia, dados e desenvolvimento com responsabilidade.
+            A comunicação da HUB-PODIUM é institucional: tecnologia, dados e desenvolvimento com responsabilidade.
           </p>
         </div>
 
@@ -406,7 +459,7 @@
           <h2 id="contact-title">Vamos conversar sobre inteligência esportiva?</h2>
           <p>
             Entre em contato para conhecer nossa visão, acompanhar o desenvolvimento da plataforma
-            ou conversar sobre parcerias estrategicas.
+            ou conversar sobre parcerias estratégicas.
           </p>
           <div class="contact-links">
             <a href="https://www.linkedin.com/company/hub-podium-esportes-e-alta-performance" target="_blank" rel="noreferrer">LinkedIn</a>
